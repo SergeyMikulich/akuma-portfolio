@@ -393,6 +393,27 @@ function App() {
             </motion.div>
           </div>
         </section>
+        
+        <section className="stats section-wrap" aria-label="Statistics">
+          <motion.div
+            className="stats-panel"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            variants={fadeUp}
+          >
+            {stats.map((stat, index) => (
+              <div key={stat.label} className="stat-item">
+                <div className="stat-icon">{stat.icon}</div>
+                <div>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+                {index < stats.length - 1 ? <div className="stat-divider" aria-hidden="true" /> : null}
+              </div>
+            ))}
+          </motion.div>
+        </section>
 
         <section className="brands section-wrap" aria-labelledby="brands-title">
           <motion.div
@@ -479,34 +500,13 @@ function App() {
                 </div>
               </div>
               <div className="works-category works-category-interviews">
-                <p className="eyebrow">Interviews</p>
+                <p className="eyebrow">Long COntent</p>
                 <div className="works-carousel" aria-label="Interview portfolio">
                   {interviewWorks.map((work) => renderWorkCard(work))}
                 </div>
               </div>
             </motion.div>
           </div>
-        </section>
-
-        <section className="stats section-wrap" aria-label="Statistics">
-          <motion.div
-            className="stats-panel"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={fadeUp}
-          >
-            {stats.map((stat, index) => (
-              <div key={stat.label} className="stat-item">
-                <div className="stat-icon">{stat.icon}</div>
-                <div>
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
-                </div>
-                {index < stats.length - 1 ? <div className="stat-divider" aria-hidden="true" /> : null}
-              </div>
-            ))}
-          </motion.div>
         </section>
 
         <section className="skills section-wrap" id="skills" aria-labelledby="skills-title">

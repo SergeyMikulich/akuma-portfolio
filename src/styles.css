@@ -306,8 +306,8 @@ img {
   margin: 0 0 1rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  font-size: 0.72rem;
-  color: var(--primary);
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .hero-content h1,
@@ -384,9 +384,7 @@ img {
   width: min(100%, 18rem);
   height: 0.35rem;
   margin: 1rem 0 0.2rem;
-  background:
-    linear-gradient(90deg, var(--primary) 0%, var(--primary) 58%, transparent 58%),
-    linear-gradient(12deg, transparent 38%, var(--primary) 38% 60%, transparent 60%);
+  background: linear-gradient(135deg, #7a2fff, #cc58ff);
   border-radius: 999px;
   box-shadow: 0 0 28px rgba(187, 77, 255, 0.45);
 }
@@ -429,7 +427,7 @@ img {
 }
 
 .button-primary {
-  background: linear-gradient(135deg, #cc58ff, #7a2fff);
+  background: linear-gradient(135deg, #7a2fff, #cc58ff);
   color: white;
   box-shadow:
     0 10px 30px rgba(138, 45, 246, 0.35),
@@ -1417,6 +1415,7 @@ img {
 
 .stats-panel {
   margin-top: 4.5rem;
+  margin-bottom: 4.5rem;
   border-radius: var(--radius-xl);
   padding: 1.5rem 0.8rem;
   display: grid;
