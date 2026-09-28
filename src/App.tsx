@@ -247,7 +247,7 @@ function App() {
         <div className={`work-thumb ${work.accent}`}>
           <div className="work-thumb-top">
             <span>{work.tag}</span>
-            <span>{meta?.authorName ?? getPlatformLabel(work.platform)}</span>
+            {/* <span>{meta?.authorName ?? getPlatformLabel(work.platform)}</span> */}
           </div>
           <div className="work-thumb-visual">
             {previewUrl ? (
@@ -259,9 +259,9 @@ function App() {
               </div>
             )}
             <div className="work-thumb-scrim" />
-            <div className="work-thumb-caption">
+            {/* <div className="work-thumb-caption">
               <span>{getPlatformLabel(work.platform)}</span>
-            </div>
+            </div> */}
             <div className="work-thumb-play">
               <Play size={16} />
             </div>
@@ -415,29 +415,6 @@ function App() {
           </motion.div>
         </section>
 
-        <section className="brands section-wrap" aria-labelledby="brands-title">
-          <motion.div
-            className="brands-panel"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.35 }}
-            variants={fadeUp}
-          >
-            <div className="brands-lead">
-              <p className="eyebrow" id="brands-title">
-                Brands & companies I&apos;ve worked with
-              </p>
-            </div>
-            <div className="brands-row" aria-label="Brand logos">
-              {brands.map((brand) => (
-                <span key={brand} className={`brand brand-${brand.toLowerCase().replace(/\s/g, '')}`}>
-                  {brand}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
         <section className="experience section-wrap" id="experience" aria-labelledby="experience-title">
           <div className="section-heading">
             <p className="eyebrow">Experience</p>
@@ -507,6 +484,29 @@ function App() {
               </div>
             </motion.div>
           </div>
+        </section>
+        
+        <section className="brands section-wrap" aria-labelledby="brands-title" id='brands'>
+          <motion.div
+            className="brands-panel"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.35 }}
+            variants={fadeUp}
+          >
+            <div className="brands-lead">
+              <p className="eyebrow" id="brands-title">
+                Brands & companies I&apos;ve worked with
+              </p>
+            </div>
+            <div className="brands-row" aria-label="Brand logos">
+              {brands.map((brand) => (
+                <span key={brand} className={`brand brand-${brand.toLowerCase().replace(/\s/g, '')}`}>
+                  {brand}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </section>
 
         <section className="skills section-wrap" id="skills" aria-labelledby="skills-title">

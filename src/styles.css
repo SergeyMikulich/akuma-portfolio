@@ -482,6 +482,10 @@ img {
   background: rgba(187, 77, 255, 0.08);
 }
 
+.brands {
+    margin-top: 2em !important;
+}
+
 .brands-panel,
 .stats-panel,
 .contact-grid,
@@ -1767,6 +1771,7 @@ img {
   .brands-row {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
 
   .timeline,
   .projects-grid,
