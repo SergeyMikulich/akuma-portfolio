@@ -608,7 +608,7 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
-              Write to me
+              Text me
               <Send size={16} />
             </a>
           </div>
