@@ -41,5 +41,9 @@ export function getFallbackThumbnailUrl(platform: WorkPlatform, url: string) {
 }
 
 export function getPlatformLabel(platform: WorkPlatform) {
-  return platform === 'tiktok' ? 'TikTok' : 'YouTube Shorts';
+  return platform === 'tiktok'
+  ? 'TikTok'
+  : platform === 'youtube' ? "YouTube" : platform === 'youtube-shorts'
+    ? 'YouTube Shorts'
+    : platform;
 }

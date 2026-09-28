@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  ExternalLink,
   Instagram,
   Linkedin,
   Menu,
@@ -17,19 +16,16 @@ import {
   Rocket,
   LayoutGrid,
   Megaphone,
-  Target,
   Camera,
   Palette,
   Sparkles,
-  BriefcaseBusiness,
   Play,
-  ShieldAlert,
   MessageSquareMore,
   MapPin,
   Copy,
 } from 'lucide-react';
 import TikTokPreviewModal from './components/TikTokPreviewModal';
-import { works } from './data/works';
+import { interviewWorks, works } from './data/works';
 import { getFallbackThumbnailUrl, getPlatformLabel } from './lib/media';
 import type { WorkItem, WorkMetadata } from './lib/work-types';
 
@@ -43,6 +39,7 @@ type TimelineItem = {
   title: string;
   company: string;
   description: string;
+  details: string;
 };
 
 type SkillItem = {
@@ -65,57 +62,66 @@ const navItems: NavItem[] = [
   { label: 'Contact', href: '#contact' },
 ];
 
-const brands = ['BetBoom', 'No[o]ne fan page', 'Miracle fan page', 'Offstage'];
+const brands = ['BetBoom Team', 'BetBoom Esports', 'No[o]ne fan page', 'Miracle fan page', 'Daxak fan page', 'OFFSTAGE'];
 
 const timeline: TimelineItem[] = [
   {
-    year: '2018 - 2021',
-    title: 'SMM Specialist',
-    company: 'Noone fan page · Freelance',
+    year: '2018 - 2022',
+    title: 'SMM / Manager',
+    company: 'NooneTV · DaxakOfficial · Miracle',
     description:
-      'Started my journey in SMM, working with influencers, streamers and gaming communities.',
+      'Social content, graphic design and TikTok production for esports channels and creators.',
+    details:
+      'NooneTV: graphic design development, content preparation and placement. DaxakOfficial: graphic design, content preparation and placement, filming and editing TikTok videos. Miracle: graphic design development, content preparation and posting.',
   },
   {
-    year: '2020 - 2022',
+    year: 'May 2022 - Feb 2024',
+    title: 'SMM / Content Maker',
+    company: 'BetBoom Team',
+    description:
+      'Social media promotion, tournament media work, player communications and short-form video production.',
+    details:
+      'Promotion across Telegram, VK, Instagram and TikTok; preparing content and publishing plans; technical specifications for designers and editors; tournament media work, player communications and organizational support; TikTok concepts, filming, props and short-form video production; memes, news content and exclusive event coverage.',
+  },
+  {
+    year: 'Feb 2024 - Sep 2025',
     title: 'SMM Manager',
-    company: 'Miracle fan page · Freelance',
+    company: 'BetBoom Esports · SMM / Content Maker',
     description:
-      'Managed social channels, built content strategy and ran campaigns for major tournaments and teams.',
+      'Social strategy, player work, tournament coverage and content production for Dota 2 and CS2.',
+    details:
+      'Worked across Telegram, VK, Instagram and TikTok; created memes and news-based picture/video content; prepared designer and editor briefs; supported players and managers during tournaments; planned, filmed and produced short TikTok videos; created fresh photo and video content from events; contributed to large YouTube productions and on-set coordination; developed promotion strategies for Telegram channels and TikTok.',
   },
   {
-    year: '2022 - 2024',
-    title: 'SMM Manager',
-    company: 'BetBoom Esports',
+    year: 'Current',
+    title: 'Host / Content Maker',
+    company: 'OFFSTAGE',
     description:
-      'Worked across Telegram, VK, Instagram and TikTok. Built content strategy, event coverage and social media campaigns for Dota 2 and CS2.',
-  },
-  {
-    year: '2025 - Now',
-    title: 'Content Maker',
-    company: 'Offstage media · Part-time',
-    description: 'Currently creating content and helping esports brands tell bigger stories.',
+      'Interviews, scripts, intros, outros and new content formats for esports media.',
+    details:
+      'Filming and conducting interviews; scriptwriting; recording intros and outros; assisting with editing; preparing content for social media; creating new content formats.',
   },
 ];
 
 const stats = [
-  { icon: <Users size={28} />, value: 'Esports SMM', label: 'Content strategy & community' },
-  { icon: <Rocket size={28} />, value: 'TikTok + Shorts', label: 'Short-form video formats' },
-  { icon: <Eye size={28} />, value: '8+', label: 'Years in esports' },
-  { icon: <Trophy size={28} />, value: 'Offstage', label: 'Current content role' },
+  { icon: <Users size={28} />, value: 'SMM / Content Maker / Host', label: 'Professional focus' },
+  { icon: <Rocket size={28} />, value: 'Shorts Content / Interviews', label: 'Video formats' },
+  { icon: <Eye size={28} />, value: '6+', label: 'Years in content' },
+  { icon: <Trophy size={28} />, value: 'OFFSTAGE', label: 'Current work' },
 ];
 
 const skills: SkillItem[] = [
   { label: 'Social Media Strategy', icon: <Megaphone size={16} /> },
   { label: 'Content Creation', icon: <Sparkles size={16} /> },
-  { label: 'Community Management', icon: <Users size={16} /> },
   { label: 'Copywriting', icon: <MessageSquareMore size={16} /> },
   { label: 'Influencer Marketing', icon: <UserRound size={16} /> },
   { label: 'Analytics & Reporting', icon: <LayoutGrid size={16} /> },
-  { label: 'Paid Social', icon: <Target size={16} /> },
-  { label: 'Crisis Management', icon: <ShieldAlert size={16} /> },
+  { label: 'Tournament Media Work', icon: <Trophy size={16} /> },
+  { label: 'Interviews', icon: <Camera size={16} /> },
   { label: 'Video Production', icon: <Play size={16} /> },
   { label: 'Photoshop / Figma', icon: <Palette size={16} /> },
-  { label: 'Team Leadership', icon: <BriefcaseBusiness size={16} /> },
+  { label: 'Script Writing', icon: <MessageSquareMore size={16} /> },
+  { label: 'Creative Director', icon: <Sparkles size={16} /> },
   { label: 'Esports Knowledge', icon: <Camera size={16} /> },
 ];
 
@@ -163,15 +169,12 @@ const fadeUp = {
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState(0);
+  const [selectedWork, setSelectedWork] = useState('');
   const [previewWork, setPreviewWork] = useState<WorkItem | null>(null);
   const [workMeta, setWorkMeta] = useState<Record<string, WorkMetadata>>({});
+  const [expandedExperience, setExpandedExperience] = useState<number | null>(null);
   const copiedEmail = useMemo(() => 'nastya.beglyakova44@gmail.com', []);
-  const activeWork = works[selectedWork];
-  const activeWorkPreview =
-    activeWork.posterUrl ??
-    workMeta[activeWork.url]?.thumbnailUrl ??
-    getFallbackThumbnailUrl(activeWork.platform, activeWork.url);
+  const allWorks = useMemo(() => [...works, ...interviewWorks], []);
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(copiedEmail);
@@ -187,7 +190,7 @@ function App() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ urls: works.map((work) => work.url) }),
+          body: JSON.stringify({ urls: allWorks.map((work) => work.url) }),
         });
 
         if (!response.ok) {
@@ -211,7 +214,7 @@ function App() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [allWorks]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -224,12 +227,60 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  const renderWorkCard = (work: WorkItem) => {
+    const meta = workMeta[work.url];
+    const previewUrl =
+      work.posterUrl ?? meta?.thumbnailUrl ?? getFallbackThumbnailUrl(work.platform, work.url);
+
+    return (
+      <button
+        key={work.id}
+        type="button"
+        className={`work-card ${selectedWork === work.id ? 'active' : ''}`}
+        onClick={() => {
+          setSelectedWork(work.id);
+          setPreviewWork(work);
+        }}
+        aria-pressed={selectedWork === work.id}
+        aria-label={`Open ${work.title}`}
+      >
+        <div className={`work-thumb ${work.accent}`}>
+          <div className="work-thumb-top">
+            <span>{work.tag}</span>
+            <span>{meta?.authorName ?? getPlatformLabel(work.platform)}</span>
+          </div>
+          <div className="work-thumb-visual">
+            {previewUrl ? (
+              <img src={previewUrl} alt={`${work.title} preview`} loading="lazy" />
+            ) : (
+              <div className="work-thumb-fallback">
+                <span>{getPlatformLabel(work.platform)}</span>
+                <strong>{work.title}</strong>
+              </div>
+            )}
+            <div className="work-thumb-scrim" />
+            <div className="work-thumb-caption">
+              <span>{getPlatformLabel(work.platform)}</span>
+            </div>
+            <div className="work-thumb-play">
+              <Play size={16} />
+            </div>
+          </div>
+        </div>
+        <div className="work-card-body">
+          <h4>{meta?.title ?? work.title}</h4>
+          <span className="work-card-platform">{getPlatformLabel(work.platform)}</span>
+        </div>
+      </button>
+    );
+  };
+
   return (
     <div className="page-shell">
       <div className="page-background" aria-hidden="true" />
       <header className="site-header">
         <a className="logo" href="#top" aria-label="Homepage">
-          <span className="logo-mark">/AB.</span>
+          <span className="logo-mark">Akuma</span>
         </a>
 
         <nav className="desktop-nav" aria-label="Primary">
@@ -313,13 +364,17 @@ function App() {
                 <span>Begliakova</span>
               </h1>
               <div className="hero-underline" aria-hidden="true" />
-              <h2>Esports Social Media Manager</h2>
+              <h2>SMM / Content Maker / Host</h2>
               <p className="hero-copy">
                 I create engaging content and digital campaigns that connect brands with millions
                 of esports fans. Turning attention into community and community into loyalty.
               </p>
               <div className="hero-actions">
-                <a className="button button-primary" href="#contact">
+                <a
+                  className="button button-primary"
+                  href="/cv/CV%20Begliakova%20Anastasiia.pdf"
+                  download="CV Begliakova Anastasiia.pdf"
+                >
                   <Download size={16} />
                   Download CV
                 </a>
@@ -367,12 +422,9 @@ function App() {
             <p className="eyebrow">Experience</p>
             <h3 id="experience-title">My Journey So Far</h3>
             <p>
-              A path built on passion for esports and digital communication. Each chapter shaped
-              the creative direction that follows.
+              SMM manager and content maker with experience across esports, social media strategy,
+              tournament media work, interviews and short-form video.
             </p>
-            <a className="button button-secondary button-small" href="#contact">
-              View full resume
-            </a>
           </div>
           <div className="timeline">
             <div className="timeline-track" aria-hidden="true" />
@@ -390,7 +442,17 @@ function App() {
                 <p className="timeline-year">{item.year}</p>
                 <h4>{item.title}</h4>
                 <p className="timeline-company">{item.company}</p>
-                <p className="timeline-description">{item.description}</p>
+                <button
+                  type="button"
+                  className={`timeline-description timeline-description-toggle ${expandedExperience === index ? 'expanded' : ''}`}
+                  aria-expanded={expandedExperience === index}
+                  onClick={() => setExpandedExperience(expandedExperience === index ? null : index)}
+                >
+                  <span>{expandedExperience === index ? item.details : item.description}</span>
+                  <span className="timeline-description-action">
+                    {expandedExperience === index ? 'Show less' : 'Read more'}
+                  </span>
+                </button>
               </motion.article>
             ))}
           </div>
@@ -400,15 +462,7 @@ function App() {
           <div className="works-layout">
             <div className="section-heading narrow works-intro">
               <p className="eyebrow">My works</p>
-              <h3 id="work-title">TikTok + Shorts portfolio</h3>
-              <p>
-                Paste TikTok and YouTube Shorts links in one file and the page will pull the
-                title, author, preview, likes and views automatically.
-              </p>
-              <a className="button button-link" href="#contact">
-                View all works
-                <ArrowUpRight size={16} />
-              </a>
+              <h3 id="work-title">Portfolio</h3>
             </div>
 
             <motion.div
@@ -418,111 +472,17 @@ function App() {
               viewport={{ once: true, amount: 0.28 }}
               variants={fadeUp}
             >
-              <div className="works-feature" aria-label={`Featured work ${activeWork.title}`}>
-                <button
-                  className={`works-feature-visual ${activeWork.accent}`}
-                  type="button"
-                  aria-label={`Open preview for ${activeWork.title}`}
-                  onClick={() => setPreviewWork(activeWork)}
-                >
-                  <div className="works-topbar">
-                    <span className="works-live">
-                      <span />
-                      {getPlatformLabel(activeWork.platform)}
-                    </span>
-                    <span className="project-icon" aria-hidden="true">
-                      <ExternalLink size={16} />
-                    </span>
-                  </div>
-                  <div className="works-phone">
-                    <div className="works-phone-screen">
-                      {activeWorkPreview ? (
-                        <img
-                          src={activeWorkPreview}
-                          alt={`${activeWork.title} preview`}
-                          loading="eager"
-                          className="works-preview-image"
-                        />
-                      ) : (
-                        <div className="works-preview-fallback">
-                          <span className="works-preview-fallback-badge">{getPlatformLabel(activeWork.platform)}</span>
-                          <strong>{activeWork.title}</strong>
-                          <p>{activeWork.description}</p>
-                        </div>
-                      )}
-                      <div className="works-preview-scrim" />
-                      <div className="works-video-glow" />
-                      <div className="works-video-stripe works-video-stripe-one" />
-                      <div className="works-video-stripe works-video-stripe-two" />
-                      <div className="works-video-stripe works-video-stripe-three" />
-                      <div className="works-video-chip">{getPlatformLabel(activeWork.platform)}</div>
-                      <div className="works-video-subtitle">{activeWork.tag}</div>
-                      <div className="works-play">
-                        <Play size={18} />
-                      </div>
-                    </div>
-                  </div>
-                </button>
-                <div className="works-feature-caption">
-                  <p className="project-label">{activeWork.tag}</p>
-                  <h4>{workMeta[activeWork.url]?.title ?? activeWork.title}</h4>
-                  <p>{activeWork.description}</p>
-                  <span className="project-pill">{activeWork.highlight}</span>
+              <div className="works-category">
+                <p className="eyebrow">Shorts Content</p>
+                <div className="works-carousel" aria-label="Shorts portfolio">
+                  {works.map((work) => renderWorkCard(work))}
                 </div>
               </div>
-
-              <div className="works-carousel" aria-label="My works carousel">
-                {works.map((work, index) => {
-                  const meta = workMeta[work.url];
-                  const previewUrl =
-                    work.posterUrl ??
-                    meta?.thumbnailUrl ??
-                    getFallbackThumbnailUrl(work.platform, work.url);
-                  return (
-                    <button
-                      key={work.id}
-                      type="button"
-                      className={`work-card ${selectedWork === index ? 'active' : ''}`}
-                      onClick={() => {
-                        setSelectedWork(index);
-                        setPreviewWork(work);
-                      }}
-                      aria-pressed={selectedWork === index}
-                      aria-label={`Show ${work.title}`}
-                    >
-                      <div className={`work-thumb ${work.accent}`}>
-                        <div className="work-thumb-top">
-                          <span>{work.tag}</span>
-                          <span>{meta?.authorName ?? getPlatformLabel(work.platform)}</span>
-                        </div>
-                        <div className="work-thumb-visual">
-                          {previewUrl ? (
-                            <img src={previewUrl} alt={`${work.title} preview`} loading="lazy" />
-                          ) : (
-                            <div className="work-thumb-fallback">
-                              <span>{getPlatformLabel(work.platform)}</span>
-                              <strong>{work.title}</strong>
-                              <p>{work.highlight}</p>
-                            </div>
-                          )}
-                          <div className="work-thumb-scrim" />
-                          <div className="work-thumb-caption">
-                            <span>{getPlatformLabel(work.platform)}</span>
-                            <strong>{work.title}</strong>
-                          </div>
-                          <div className="work-thumb-play">
-                            <Play size={16} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="work-card-body">
-                        <h4>{meta?.title ?? work.title}</h4>
-                        <p>{work.highlight}</p>
-                        <span className="work-card-platform">{getPlatformLabel(work.platform)}</span>
-                      </div>
-                    </button>
-                  );
-                })}
+              <div className="works-category works-category-interviews">
+                <p className="eyebrow">Interviews</p>
+                <div className="works-carousel" aria-label="Interview portfolio">
+                  {interviewWorks.map((work) => renderWorkCard(work))}
+                </div>
               </div>
             </motion.div>
           </div>
@@ -639,7 +599,7 @@ function App() {
             </div>
             <div className="contact-item">
               <p>Location</p>
-              <strong>Moscow, Russia</strong>
+              <strong>Saint Petersburg, Russia</strong>
               <MapPin size={14} />
             </div>
             <a
@@ -657,7 +617,7 @@ function App() {
 
       <footer className="site-footer section-wrap">
         <a className="logo footer-logo" href="#top" aria-label="Homepage">
-          <span className="logo-mark">/AB.</span>
+          <span className="logo-mark">Akuma</span>
         </a>
         <p>© 2026 Anastasiia Begliakova. All rights reserved.</p>
         <div className="footer-socials" aria-label="Footer social links">
@@ -671,9 +631,6 @@ function App() {
             <Instagram size={16} />
           </a>
         </div>
-        <p className="footer-note">
-          Designed with passion for esports <span aria-hidden="true">♥</span>
-        </p>
       </footer>
 
       <TikTokPreviewModal work={previewWork} onClose={() => setPreviewWork(null)} />
